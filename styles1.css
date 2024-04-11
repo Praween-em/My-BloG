@@ -1,0 +1,10 @@
+/* styles.css */
+section {
+    float: left; /* Float the section to the left */
+    width: 60%; /* Set the width of the section */
+}
+
+.right-text {
+    margin-left: 5%; /* Add margin to create space between the section and the text */
+    width: 35%; /* Set the width of the text to the right */
+}

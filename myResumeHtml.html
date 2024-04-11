@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Resume</title>
+    <link rel="stylesheet" href="Style.css">
+</head>
+<body>       
+<div class ="logoandnav">
+    <nav>
+        <h1>My <span>Blog</span></h1>
+        <ul>
+            <li><a href="#">About Me</a></li>
+            <li><a href="#">Courses and Certificates</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="#">Socials</a></li>
+        </ul>
+    </nav>
+<div class="colm0">
+    <h1> <b class="hello" >Hello ! </b> I'm <span> Praveen</span> I'm a <span class="multitext"> Programmer </span></h1>
+    <script>
+      
+        const wordsToType = ["Programmer", "Designer !!", "Developer @","Mathematician"]; // Add more words as needed
+        const typingTextElement = document.querySelector('.multitext');
+      
+        function typeWords(wordIndex, letterIndex, isDeleting) {
+          const currentWord = wordsToType[wordIndex];
+      
+          typingTextElement.textContent = isDeleting ? currentWord.substring(0, letterIndex - 1) : currentWord.substring(0, letterIndex + 1);
+      
+          if (isDeleting) {
+            letterIndex--;
+          } else {
+            letterIndex++;
+          }
+      
+          if (!isDeleting && letterIndex > currentWord.length) {
+            isDeleting = true;
+            setTimeout(() => typeWords(wordIndex, letterIndex, isDeleting), 400); // Time to wait before starting to delete (milliseconds)
+          } else if (isDeleting && letterIndex === 0) {
+            isDeleting = false;
+            wordIndex = (wordIndex + 1) % wordsToType.length;
+            setTimeout(() => typeWords(wordIndex, letterIndex, isDeleting), 500); // Time to wait before starting to type the next word (milliseconds)
+          } else {
+            setTimeout(() => typeWords(wordIndex, letterIndex, isDeleting), 215); // Adjust the typing speed (milliseconds)
+          }
+        }
+        typeWords(0, 0, false);
+      </script>
+      </div>
+      <div class="buttons">
+      <button class="downloadCv"> Download CV</button>
+      <button class="hireMe">Hire Me</button>
+      </div>
+      <div class="imageContainer">
+        <img src="static/images/image (5).png">
+      </div>
+</div>
+    </body>
+</html>

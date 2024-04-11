@@ -1,0 +1,127 @@
+body {
+    background: black;
+}
+
+.logoandnav {
+    display: inline-block;
+    height: 100vh;
+    width: 100%;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logoandnav h1 {
+    color: white;
+    font-size: 50px;
+    padding-left: 50px;
+}
+
+.logoandnav h1 span {
+    color: rgb(8, 160, 26);
+}
+
+nav ul li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 20px 20px;
+}
+
+nav ul li a {
+    padding: 10px;
+    text-decoration: none;
+    color: rgb(8, 160, 26);
+    font-size: 25px;
+    font-weight: bold;
+}
+
+nav ul li :hover {
+
+    transition: 0.3s;
+    color: white;
+    font-weight: bolder;
+    border-radius: 20px;
+}
+
+.colm0 {
+    padding-top: 15px;
+    padding-left: 50px;
+    display: inline-block;
+    width: 45%;
+    height: 50vh;
+    overflow: hidden;
+    color: green;
+}
+
+.hello {
+    position: relative;
+    font-size: 1.4em;
+    color: green;
+}
+span{
+    font-size: 1.5em;
+}
+.multitext {
+    font-size: 0.9em;
+}
+
+.buttons {
+    position: relative;
+    margin-top: -50px;
+}
+
+.downloadCv {
+    position: relative;
+    margin-left: 100px;
+    font-weight: bolder;
+    color: green;
+    height: 40px;
+    width: 150px;
+    font-size: larger;
+    background-color: white;
+}
+
+.downloadCv:hover {
+    border-radius: 15%;
+    transition: 0.2s;
+    background-color: green;
+    color: white;
+    cursor: pointer;
+}
+
+.hireMe {
+    position: relative;
+    margin-left: 80px;
+    font-weight: bolder;
+    font-size: larger;
+    color: green;
+    height: 40px;
+    width: 150px;
+    background-color: white;
+}
+
+.hireMe:hover {
+
+    border-radius: 15%;
+    transition: 0.2s;
+    background-color: green;
+    color: white;
+    cursor: pointer;
+}
+
+.imageContainer {
+    display: inline-block;
+    z-index: 5;
+    position: relative;
+    margin-top: -450px;
+    margin-left: 800px;
+
+}
+
+.imageContainer img {
+    height: 350px;
+    width: 350px;
+}

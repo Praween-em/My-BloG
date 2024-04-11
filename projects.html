@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Resume</title>
+    <link rel="stylesheet" href="Style.css">
+</head>
+
+<body>
+
+    <div class="heading"> 
+    <h1 style="color:white">Projects :</h1>
+</div>
+
+<div class="container">
+    <section class="section1" id="section1">
+        <div class="section1Heading">
+        <h1>Emotion Recognition:</h1>
+    </div>
+    
+    <div class="emoRecPro">
+    <input type="file" id="fileInput" style="display: none;">
+    <button class="uploadButton" id="uploadButton"type="button" onclick="document.getElementById('fileInput').click();">Upload Photo</button>
+    <button class="captureButton"id="captureButton" style="display:none;">Capture</button>
+    <button onclick="startCamera()" class="takePhoto" id="takePhoto">Take Photo</button>
+    <button class="liveStream" id="liveStream">Live Stream</button>    
+    </div>
+    <div class="liveResult">
+    <canvas class="capturedCanvas" id="capturedCanvas" style="display: none;"></canvas>
+    <video id="cameraFeed" style="display:none;"></video>
+    <img calss ="capturedImage" id="capturedImage">
+    <video class="localVideo" id="localVideo" autoplay style="display:none"></video>
+    
+    </div>
+
+    <button onclick="toggleContent()" class="generate" > Generate</button>
+
+</section>
+
+</div>
+
+<div class="emoResult" id="emoResult">
+    <img src="#"> 
+    <h1 style="color: white;">This is new content</h1>
+</div>
+
+<button class="prev">Previous</button>
+<button class="next">Next</button>
+
+<h1 style="color: green;">Project Description:</h1>
+
+<p class="prjdesc">
+    This project, an <span style="color: green;">Emotion Recognition System</span>, highlights my proficiency with <span style="color: green;">DeepFace</span> modules for facial analysis. It features four key functionalities tailored for user interaction and emotion recognition. The <span style="color: green;">"Upload Photo"</span> function allows seamless submission of images for analysis. Utilizing <span style="color: green;">YOLO</span> (You Only Look Once), the system swiftly detects faces upon upload or in real-time via <span style="color: green;">"Take Photo"</span>. The <span style="color: green;">"Live Stream"</span> capability ensures continuous face detection for dynamic emotion recognition. DeepFace accurately analyzes facial expressions, discerning a wide spectrum of emotions. The"Generate Emotion Buttons" feature provides an intuitive interface, displaying detected emotions interactively. Crafted using <span style="color: green;">HTML</span>, <span style="color: green;">CSS</span>, and <span style="color: green;">JavaScript</span> for the frontend and <span style="color: green;">Python</span> with <span style="color: green;">Flask</span> for backend processing, this system represents a significant advancement in facial analysis technology, combining YOLO's efficiency with DeepFace's precision.</p>
+    
+<script>    
+    function toggleContent(){
+
+        var OriginalContent = document.getElementById('section1');
+        var newContent = document.getElementById('emoResult');
+
+        if(OriginalContent.style.display === 'none'){
+            OriginalContent.style.display='block';
+            newContent.style.display = 'none';
+        }else{
+            OriginalContent.style.display='none';
+            newContent.style.display='block';
+
+        }
+    }
+</script>
+<script>
+    const startCameraButton = document.getElementById('takePhoto');
+    const cameraFeed = document.getElementById('cameraFeed');
+    const captureButton = document.getElementById('captureButton');
+    const capturedCanvas = document.getElementById('capturedCanvas');
+    const capturedImage = document.getElementById('capturedImage');
+    const uploadButton = document.getElementById('uploadButton')
+    const liveStreamButton = document.getElementById('liveStream');
+    let stream;
+
+        async function startCamera() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                cameraFeed.srcObject = stream;
+                cameraFeed.play();
+                startCameraButton.style.display = 'none';
+                uploadButton.style.display='none';
+                liveStreamButton.style.display= 'none';
+                captureButton.style.display = 'flex';
+            } catch (error) {
+                console.error('Error accessing the camera:', error);
+            }
+        }
+        // Function to capture image from camera feed
+        function captureImage() {
+            const context = capturedCanvas.getContext('2d');
+            capturedCanvas.width = 250;
+            capturedCanvas.height = 250;
+            context.drawImage(cameraFeed, 0, 0, capturedCanvas.width, capturedCanvas.height);
+            capturedImage.src = capturedCanvas.toDataURL('image/jpeg');
+            capturedImage.style.display = 'block';
+        }
+
+        // Event listeners
+        startCameraButton.addEventListener('click', startCamera);
+        captureButton.addEventListener('click', captureImage);
+        
+    
+</script>
+<script>
+    // Get reference to the video element and start button
+    const localVideo = document.getElementById('localVideo');
+    const startButton = document.getElementById('liveStream');
+
+    // Function to start the video stream
+    async function startStream() {
+        startCameraButton.style.display = 'none';
+                uploadButton.style.display='none';
+                liveStreamButton.style.display= 'none';
+                localVideo.style.display='flex';
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+            localVideo.srcObject = stream;
+        } catch (error) {
+            console.error('Error accessing the camera:', error);
+        }
+    }
+
+    // Event listener for the start button
+    liveStreamButton.addEventListener('click', startStream);
+</script>
+
+</body>
