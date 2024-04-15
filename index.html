@@ -60,29 +60,29 @@
 </div>
     <script>
        function downloadCV() {
-    // Path to your CV PDF file
-    var cvUrl = 'path/to/your/cv.pdf';
+    
+    var cvUrl = 'FULLstack (1).pdf';
 
-    // Create an anchor element
+   
     var link = document.createElement('a');
 
-    // Set the href attribute to the CV PDF URL
+   
     link.href = cvUrl;
 
-    // Set the download attribute to force download
-    link.download = 'your_cv.pdf';
+    
+    link.download = 'FULLstack (1).pdf';
 
-    // Append the anchor element to the body
+  
     document.body.appendChild(link);
 
-    // Trigger a click event on the anchor element
+
     link.click();
 
-    // Remove the anchor element from the body
+   
     document.body.removeChild(link);
 }
 
-// Add click event listener to the "Download CV" button
+
 document.getElementById('downloadCVBtn').addEventListener('click', downloadCV);
     </script>
     </body>
