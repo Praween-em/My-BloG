@@ -150,19 +150,20 @@ h1{
     width:30%;
     height: 50%;
     background:linear-gradient(to right, green,rgb(10, 66, 5));
-    border: solid 2px white;
-    
+    border: solid 2px white;    
 }
+
 .container2{
-display: inline-block;
-color: white;
-margin-top: 50px;
-margin-left: 20px;
-width:30%;
-height: 50%;
-background:linear-gradient(to right, green,rgb(10, 66, 5));
-border: solid 2px white;
+    display: inline-block;
+    color: white;
+    margin-top: 50px;
+    margin-left: 20px;
+    width:30%;
+    height: 50%;
+    background:linear-gradient(to right, green,rgb(10, 66, 5));
+    border: solid 2px white;
 }
+
 .container3{
     display: inline-block;
     color: white;
@@ -173,6 +174,7 @@ border: solid 2px white;
     background:linear-gradient(to right, green,rgb(10, 66, 5));
     border: solid 2px white;
     }
+
 .container1:hover{ 
     background:black;
     color:white;
@@ -184,6 +186,7 @@ border: solid 2px white;
     color:white;
     cursor: pointer;
 }
+
 .container3:hover{ 
     background:black;
     color:white;
