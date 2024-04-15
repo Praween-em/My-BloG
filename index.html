@@ -52,7 +52,7 @@
       </div>
       <div class="buttons">
       <button class="downloadCv" id="downloadCVBtn"> Download CV</button>
-      <button class="hireMe" id="hireMe">Hire Me</button>
+      <button class="hireMe" id="hireMeBtn">Hire Me</button>
       </div>
       <div class="imageContainer">
         <img src="image (5).png">
@@ -85,14 +85,15 @@
 
 document.getElementById('downloadCVBtn').addEventListener('click', downloadCV);
     </script>
-    <script>
+
+<script>
 function sendEmail() {
     var emailAddress = 'praveen1345221@gmail.com'; // Replace 'example@gmail.com' with your email address
     var mailtoUrl = 'mailto:' + encodeURIComponent(emailAddress);
     window.location.href = mailtoUrl;
 }
 
-document.getElementById('hireMe').addEventListener('click', sendEmail);
+document.getElementById('hireMeBtn').addEventListener('click', sendEmail);
 </script>
     
     </body>
