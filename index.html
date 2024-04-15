@@ -85,5 +85,19 @@
 
 document.getElementById('downloadCVBtn').addEventListener('click', downloadCV);
     </script>
+    <script>
+        function sendEmail() {
+    var emailAddress = 'praveen1345221@gmail.com';
+    var subject = '';
+    var dynamicSubject = ''; 
+    var body = '';
+    var mailtoUrl = 'mailto:' + encodeURIComponent(emailAddress) +
+                    '?subject=' + encodeURIComponent(dynamicSubject) +
+                    '&body=' + encodeURIComponent(body);
+    window.location.href = mailtoUrl;
+}
+
+document.getElementById('hireMe').addEventListener('click', sendEmail);
+    </script>
     </body>
 </html>
