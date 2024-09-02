@@ -9,11 +9,12 @@
 </head>
 <body>
     <canvas id="matrix"></canvas>canvas>
-<div class ="logoandnav">
+<div class="HeadDiv" id="HeadDiv">
+    <div class ="logoandnav">
     <nav>
         <h1>My <span>Blog</span></h1>
         <ul>
-            <li><a href="#">About Me</a></li>
+            <li><a href="AboutMe.html">About Me</a></li>
             <li><a href="certificates.html">Courses and Certificates</a></li>
             <li><a href="projects.html">Projects</a></li>
           
@@ -21,8 +22,9 @@
     </nav>
 <div class="colm0">
     <h1> <b class="hello" >Hello ! </b> I'm <span> Praveen</span> I'm a <span class="multitext"> Programmer </span></h1>
+</div>
     <script>
-      
+     
         const wordsToType = ["Programmer", "Designer !!", "Developer @","Mathematician"]; // Add more words as needed
         const typingTextElement = document.querySelector('.multitext');
       
@@ -95,10 +97,10 @@ function sendEmail() {
 }
 
 document.getElementById('hireMeBtn').addEventListener('click', sendEmail);
-<script>
-    const canvas = document.getElementById('matrix');
+const canvas = document.getElementById('matrix');
 const ctx = canvas.getContext('2d');
-
+</script>
+<script>
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
@@ -149,7 +151,6 @@ window.addEventListener('resize', () => {
     canvas.height = window.innerHeight;
 });
     </script>
-</script>
     
     </body>
 </html>
