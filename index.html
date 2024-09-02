@@ -7,7 +7,8 @@
     <title>My Resume</title>
     <link rel="stylesheet" href="Style.css">
 </head>
-<body>       
+<body>
+    <canvas id="matrix"></canvas>canvas>
 <div class ="logoandnav">
     <nav>
         <h1>My <span>Blog</span></h1>
@@ -94,6 +95,60 @@ function sendEmail() {
 }
 
 document.getElementById('hireMeBtn').addEventListener('click', sendEmail);
+<script>
+    const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const fontSize = 25;
+const columns = canvas.width +250/ fontSize;
+const drops = Array(Math.floor(columns)).fill(1);
+
+const img = new Image();
+img.src = 'matrixcode_msdf3.png'; // Use the image you uploaded
+img.onload = () => {
+    const imgWidth = img.width / 8;
+    const imgHeight = img.height / 8;
+
+    function drawMatrix() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.10)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        for (let i = 0; i < drops.length; i++) {
+            const x = i * fontSize;
+            const y = drops[i] * fontSize;
+            ctx.drawImage(
+                img, 
+                Math.floor(Math.random() * 8) * imgWidth, 
+                Math.floor(Math.random() * 8) * imgHeight,
+                imgWidth, 
+                imgHeight,
+                x, 
+                y, 
+                fontSize, 
+                fontSize
+            );
+            if (y > canvas.height && Math.random() > 0.975) {
+                
+                drops[i] = 0;
+                
+            }
+    
+            drops[i]++;
+        }
+    }
+    
+
+    setInterval(drawMatrix, 33);
+};
+
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth+250;
+    canvas.height = window.innerHeight;
+});
+    </script>
 </script>
     
     </body>
