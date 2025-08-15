@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -122,12 +121,21 @@
 
   /* Responsive adjustments */
   .editor-inner{
-    padding: 16px 20px;
-    max-width: 980px;
-    margin: 0 auto;
+    padding: 16px;
+    max-width: none;
+    margin: 0;
     width: 100%;
     box-sizing: border-box;
   }
+  
+  @media (min-width: 768px) {
+    .editor-inner{
+      padding: 16px 20px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+  }
+
   .tabs{
     display: flex;
     gap: 2px;
@@ -160,12 +168,13 @@
   }
   .img-wrap img{
     max-width: 100%;
+    height: auto;
     border: 1px solid var(--border);
     border-radius: 8px;
     max-height: 400px;
     object-fit: contain;
   }
-
+  
   /* Original styles */
   .brand{
     display: flex;
@@ -337,10 +346,10 @@
 
 <script>
 /* ===========================
-   Virtual File System (VFS)
-   =========================== */
+    Virtual File System (VFS)
+    =========================== */
 const VFS = {
-  name: "your-username",   // <-- set to your GitHub username to match repo
+  name: "your-username",  // <-- set to your GitHub username to match repo
   type: "folder",
   children: [
     {
@@ -532,8 +541,8 @@ function patchImages(node){
 patchImages(VFS);
 
 /* ==============
-   UI Rendering
-   ============== */
+    UI Rendering
+    ============== */
 const $tree = document.getElementById('tree');
 const $tabs = document.getElementById('tabs');
 const $editor = document.getElementById('editor');
@@ -611,8 +620,8 @@ function setActiveNode(path){
 $tree.appendChild(buildTree(VFS));
 
 /* ===========
-   Tabs logic
-   =========== */
+    Tabs logic
+    =========== */
 function openFile(path){
   try {
     const node = findNodeByPath(VFS, path);
@@ -672,8 +681,8 @@ function renderTabs(){
 }
 
 /* ==============
-   Editor render
-   ============== */
+    Editor render
+    ============== */
 function renderEditor(node){
   if (!node) return;
   
@@ -725,8 +734,8 @@ function renderEditor(node){
 }
 
 /* =========
-   Helpers
-   ========= */
+    Helpers
+    ========= */
 function findNodeByPath(node, path, base=''){
   const here = base ? base + '/' + node.name : node.name;
   if(here === path) return node;
@@ -748,7 +757,7 @@ function renderMarkdown(md){
   
   // Images
   html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, src) => {
-    return `<img alt="${alt}" src="${src}" style="max-width:100%; border:1px solid var(--border); border-radius:6px; margin:10px 0;">`;
+    return `<img alt="${alt}" src="${src}" style="max-width:100%; height:auto; border:1px solid var(--border); border-radius:6px; margin:10px 0;">`;
   });
   
   // Links
@@ -780,8 +789,8 @@ function renderMarkdown(md){
 }
 
 /* =========
-   Commands
-   ========= */
+    Commands
+    ========= */
 document.getElementById('openAll').addEventListener('click', ()=>{
   const paths = [
     `${VFS.name}/profile/about_me.md`,
