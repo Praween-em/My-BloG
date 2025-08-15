@@ -5,108 +5,184 @@
 <title>VS Code Portfolio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  :root{
-    --bg:#1e1e1e; --panel:#252526; --sidebar:#252526; --active:#37373d;
-    --text:#d4d4d4; --muted:#9aa0a6; --accent:#0e639c; --border:#2d2d2d;
-    --tab:#2d2d2d; --tab-active:#1f2937; --badge:#2b88d8;
-    --green:#4caf50; --red:#e57373; --yellow:#ffc107;
-    --font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  }
-  [data-theme="light"]{
-    --bg:#f5f7fb; --panel:#ffffff; --sidebar:#f0f2f8; --active:#e7eaf3;
-    --text:#1f2328; --muted:#6b7280; --accent:#2563eb; --border:#dfe3ea;
-    --tab:#e7eaf3; --tab-active:#ffffff; --badge:#2563eb;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 var(--font)}
-  .layout{display:grid;grid-template-columns: 260px 1fr;grid-template-rows: 40px 1fr 26px;height:100vh}
-  .topbar{grid-column:1/-1;background:var(--panel);display:flex;align-items:center;gap:8px;padding:0 10px;border-bottom:1px solid var(--border)}
-  .brand{display:flex;align-items:center;gap:8px;font-weight:600}
-  .brand svg{width:18px;height:18px}
-  .spacer{flex:1}
-  .btn{border:1px solid var(--border);background:transparent;color:var(--text);padding:4px 8px;border-radius:6px;cursor:pointer}
-  .btn:hover{background:var(--active)}
-  .sidebar{background:var(--sidebar);border-right:1px solid var(--border);padding:8px;overflow:auto}
-  .section-title{font-size:12px;color:var(--muted);margin:6px 8px}
-  .tree{user-select:none}
-  .node{display:flex;align-items:center;gap:6px;padding:4px 6px;border-radius:6px;cursor:pointer}
-  .node:hover{background:var(--active)}
-  .node.active{background:var(--active)}
-  .node .name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .badge{font-size:11px;background:var(--badge);color:#fff;border-radius:10px;padding:1px 6px}
-  .indent{padding-left:16px}
-  .content{display:flex;flex-direction:column;min-width:0}
-  .tabs{display:flex;gap:2px;background:var(--panel);border-bottom:1px solid var(--border);overflow:auto}
-  .tab{display:flex;align-items:center;gap:8px;max-width:280px;padding:6px 10px;background:var(--tab);border-right:1px solid var(--border);cursor:pointer;color:var(--text)}
-  .tab.active{background:var(--tab-active);font-weight:600}
-  .tab .close{opacity:.7}
-  .tab .close:hover{opacity:1}
-  .editor{position:relative;flex:1;overflow:auto;background:var(--bg)}
-  .editor-inner{padding:16px 20px;max-width:980px;margin:0 auto}
-  pre,code{font:13px/1.6 var(--font)}
-  pre{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:12px;overflow:auto;white-space:pre-wrap;word-break:break-word}
-  pre[contenteditable="true"]{outline:none}
-  .md h1,.md h2,.md h3{margin:.6em 0 .2em}
-  .md h1{font-size:22px}.md h2{font-size:18px}.md h3{font-size:16px}
-  .md p{margin:.4em 0}
-  .md ul{margin:.3em 0 .6em 1.2em}
-  .md a{color:var(--accent);text-decoration:none}
-  .md a:hover{text-decoration:underline}
-  .img-wrap{display:flex;gap:12px;flex-wrap:wrap}
-  .img-wrap img{max-width:100%;border:1px solid var(--border);border-radius:8px}
-  .statusbar{grid-column:1/-1;background:var(--panel);display:flex;align-items:center;gap:10px;padding:0 10px;border-top:1px solid var(--border);color:var(--muted)}
-  .status-dot{width:8px;height:8px;background:var(--green);border-radius:50%}
-  .kbd{border:1px solid var(--border);border-bottom-width:2px;border-radius:4px;padding:0 4px;font-size:12px}
-  .mono{font-family:var(--font)}
+  :root{
+    --bg:#1e1e1e; --panel:#252526; --sidebar:#252526; --active:#37373d;
+    --text:#d4d4d4; --muted:#9aa0a6; --accent:#0e639c; --border:#2d2d2d;
+    --tab:#2d2d2d; --tab-active:#1f2937; --badge:#2b88d8;
+    --green:#4caf50; --red:#e57373; --yellow:#ffc107;
+    --font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+  [data-theme="light"]{
+    --bg:#f5f7fb; --panel:#ffffff; --sidebar:#f0f2f8; --active:#e7eaf3;
+    --text:#1f2328; --muted:#6b7280; --accent:#2563eb; --border:#dfe3ea;
+    --tab:#e7eaf3; --tab-active:#ffffff; --badge:#2563eb;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 var(--font)}
+
+  /* 📱 Mobile-First Layout (Default) */
+  .layout{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .topbar, .statusbar{
+    background:var(--panel);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:0 10px;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+  }
+  .topbar{
+    border-bottom:1px solid var(--border);
+    border-top:none;
+    height: 40px;
+  }
+  .statusbar{
+    height: 26px;
+  }
+  .brand{display:flex;align-items:center;gap:8px;font-weight:600}
+  .brand svg{width:18px;height:18px}
+  .spacer{flex:1}
+  .btn{border:1px solid var(--border);background:transparent;color:var(--text);padding:4px 8px;border-radius:6px;cursor:pointer;font-size:12px;white-space:nowrap}
+  .btn:hover{background:var(--active)}
+  .sidebar{
+    background:var(--sidebar);
+    border-right:1px solid var(--border);
+    padding:8px;
+    overflow:auto;
+    /* Mobile-specific */
+    position: absolute;
+    top: 40px;
+    bottom: 26px;
+    left: 0;
+    width: 260px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 100;
+  }
+  .sidebar.open{
+    transform: translateX(0);
+  }
+  .section-title{font-size:12px;color:var(--muted);margin:6px 8px}
+  .tree{user-select:none}
+  .node{display:flex;align-items:center;gap:6px;padding:4px 6px;border-radius:6px;cursor:pointer}
+  .node:hover{background:var(--active)}
+  .node.active{background:var(--active)}
+  .node .name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .badge{font-size:11px;background:var(--badge);color:#fff;border-radius:10px;padding:1px 6px}
+  .indent{padding-left:16px}
+  .content{display:flex;flex-direction:column;min-width:0;flex:1;overflow:hidden}
+  .tabs{display:flex;gap:2px;background:var(--panel);border-bottom:1px solid var(--border);overflow-x:auto;white-space:nowrap}
+  .tab{display:flex;align-items:center;gap:8px;max-width:280px;padding:6px 10px;background:var(--tab);border-right:1px solid var(--border);cursor:pointer;color:var(--text);flex-shrink:0}
+  .tab.active{background:var(--tab-active);font-weight:600}
+  .tab .close{opacity:.7}
+  .tab .close:hover{opacity:1}
+  .editor{position:relative;flex:1;overflow:auto;background:var(--bg)}
+  .editor-inner{padding:16px 20px;max-width:980px;margin:0 auto}
+  pre,code{font:13px/1.6 var(--font)}
+  pre{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:12px;overflow:auto;white-space:pre-wrap;word-break:break-word}
+  pre[contenteditable="true"]{outline:none}
+  .md h1,.md h2,.md h3{margin:.6em 0 .2em}
+  .md h1{font-size:22px}.md h2{font-size:18px}.md h3{font-size:16px}
+  .md p{margin:.4em 0}
+  .md ul{margin:.3em 0 .6em 1.2em}
+  .md a{color:var(--accent);text-decoration:none}
+  .md a:hover{text-decoration:underline}
+  .img-wrap{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  .img-wrap img{max-width:100%;border:1px solid var(--border);border-radius:8px}
+  .status-dot{width:8px;height:8px;background:var(--green);border-radius:50%}
+  .kbd{border:1px solid var(--border);border-bottom-width:2px;border-radius:4px;padding:0 4px;font-size:10px}
+  .mono{font-family:var(--font)}
+  .hide-on-mobile { display: none; }
+  .show-on-mobile { display: block; }
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 90;
+    display: none;
+  }
+  .overlay.active {
+    display: block;
+  }
+
+  /* 💻 Desktop & Tablet Layout */
+  @media (min-width: 768px) {
+    .layout{
+      display:grid;
+      grid-template-columns: 260px 1fr;
+      grid-template-rows: 40px 1fr 26px;
+    }
+    .topbar{grid-column:1/-1;}
+    .statusbar{grid-column:1/-1;}
+    .sidebar{
+      position: relative;
+      transform: translateX(0);
+    }
+    .content{
+      grid-column:2;
+      grid-row:2;
+    }
+    .hide-on-mobile { display: flex; }
+    .show-on-mobile { display: none; }
+  }
 </style>
 </head>
 <body data-theme="dark">
 <div class="layout">
-  <div class="topbar">
-    <div class="brand">
-      <!-- VS Code-ish icon -->
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 3 10 9 6 6 3 8l7 4-7 4 3 2 4-3 10 6V3Z" fill="currentColor" opacity=".8"/></svg>
-      <span>VS Code Portfolio</span>
-    </div>
-    <span class="mono" id="repoName"></span>
-    <div class="spacer"></div>
-    <button class="btn" id="themeToggle" title="Toggle theme">Toggle Theme</button>
-    <button class="btn" id="openAll" title="Open all files">Open All</button>
-  </div>
+  <div class="topbar">
+        <button class="btn show-on-mobile" id="menuToggle" title="Toggle menu">☰</button>
+    <div class="brand">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 3 10 9 6 6 3 8l7 4-7 4 3 2 4-3 10 6V3Z" fill="currentColor" opacity=".8"/></svg>
+      <span>VS Code Portfolio</span>
+    </div>
+    <span class="mono" id="repoName"></span>
+    <div class="spacer"></div>
+    <button class="btn" id="themeToggle" title="Toggle theme">Toggle Theme</button>
+    <button class="btn hide-on-mobile" id="openAll" title="Open all files">Open All</button>
+  </div>
 
-  <aside class="sidebar">
-    <div class="section-title">EXPLORER</div>
-    <div id="tree" class="tree"></div>
-  </aside>
+  <aside class="sidebar" id="sidebar">
+    <div class="section-title">EXPLORER</div>
+    <div id="tree" class="tree"></div>
+  </aside>
+    <div class="overlay" id="overlay"></div>
 
-  <main class="content">
-    <div class="tabs" id="tabs"></div>
-    <div class="editor"><div class="editor-inner" id="editor"></div></div>
-  </main>
+  <main class="content">
+    <div class="tabs" id="tabs"></div>
+    <div class="editor"><div class="editor-inner" id="editor"></div></div>
+  </main>
 
-  <div class="statusbar">
-    <span class="status-dot"></span>
-    <span id="status">Ready</span>
-    <div class="spacer"></div>
-    <span class="kbd">Ctrl/Cmd + P</span> Quick Open
-    <span class="kbd">Ctrl/Cmd + W</span> Close Tab
-  </div>
+  <div class="statusbar">
+    <span class="status-dot"></span>
+    <span id="status">Ready</span>
+    <div class="spacer hide-on-mobile"></div>
+    <span class="kbd hide-on-mobile">Ctrl/Cmd + P</span> <span class="hide-on-mobile">Quick Open</span>
+    <span class="kbd hide-on-mobile">Ctrl/Cmd + W</span> <span class="hide-on-mobile">Close Tab</span>
+  </div>
 </div>
 
 <script>
 /* ===========================
-   Virtual File System (VFS)
-   =========================== */
+   Virtual File System (VFS)
+   =========================== */
 const VFS = {
-  name: "your-username",   // <-- set to your GitHub username to match repo
-  type: "folder",
-  children: [
-    {
-      name: "profile",
-      type: "folder",
-      children: [
-        { name: "about_me.md", type: "file", content:
+  name: "your-username",   // <-- set to your GitHub username to match repo
+  type: "folder",
+  children: [
+    {
+      name: "profile",
+      type: "folder",
+      children: [
+        { name: "about_me.md", type: "file", content:
 `# Hi, I'm Your Name
 
 I'm a developer focused on **web**, **systems**, and **developer tools**. I love building delightful UX with strong engineering under the hood.
@@ -124,12 +200,12 @@ I'm a developer focused on **web**, **systems**, and **developer tools**. I love
 ## Currently
 - ⚙️ Prototyping a VS Code–style portfolio (this!)
 - 📚 Reading: *Clean Architecture*`},
-        { name: "education.json", type: "file", content:
+        { name: "education.json", type: "file", content:
 `[
-  {"degree":"B.Tech in Computer Science","institution":"IIIT Hyderabad","year":"2021–2025","highlights":["GPA 9.1/10","Systems & HCI track"]},
-  {"degree":"High School","institution":"Narayana Junior College","year":"2019–2021","highlights":["State Rank Top 1%","Physics Olympiad qualifier"]}
+  {"degree":"B.Tech in Computer Science","institution":"IIIT Hyderabad","year":"2021–2025","highlights":["GPA 9.1/10","Systems & HCI track"]},
+  {"degree":"High School","institution":"Narayana Junior College","year":"2019–2021","highlights":["State Rank Top 1%","Physics Olympiad qualifier"]}
 ]`},
-        { name: "experience.txt", type: "file", content:
+        { name: "experience.txt", type: "file", content:
 `Experience
 ----------
 
@@ -141,58 +217,58 @@ Software Engineer Intern — Acme Corp (May 2024–Aug 2024)
 Freelance — Frontend / Tooling (2022–present)
 • Shipped 15+ sites and 3 internal tools.
 • Created a form engine used by 3 startups.`},
-        { name: "contact.html", type: "file", content:
+        { name: "contact.html", type: "file", content:
 `<!doctype html>
 <html><head><meta charset="utf-8">
 <style>body{font:14px system-ui;margin:20px;color:#111}a{color:#2563eb}</style></head>
 <body>
-  <h2>Contact</h2>
-  <p>Say hi at <a href="mailto:you@example.com">you@example.com</a> or DM on <a href="https://linkedin.com/in/your-username" target="_blank" rel="noopener">LinkedIn</a>.</p>
-  <form onsubmit="alert('Pretend sent!');return false;">
-    <label>Name<br><input required></label><br><br>
-    <label>Email<br><input type="email" required></label><br><br>
-    <label>Message<br><textarea rows="4" required></textarea></label><br><br>
-    <button>Send</button>
-  </form>
+  <h2>Contact</h2>
+  <p>Say hi at <a href="mailto:you@example.com">you@example.com</a> or DM on <a href="https://linkedin.com/in/your-username" target="_blank" rel="noopener">LinkedIn</a>.</p>
+  <form onsubmit="alert('Pretend sent!');return false;">
+    <label>Name<br><input required></label><br><br>
+    <label>Email<br><input type="email" required></label><br><br>
+    <label>Message<br><textarea rows="4" required></textarea></label><br><br>
+    <button>Send</button>
+  </form>
 </body></html>`}
-      ]
-    },
-    {
-      name: "projects",
-      type: "folder",
-      children: [
-        { name: "projects.js", type: "file", content:
+      ]
+    },
+    {
+      name: "projects",
+      type: "folder",
+      children: [
+        { name: "projects.js", type: "file", content:
 `// Selected projects
 export const projects = [
-  {
-    name: "Toletu — Roommate Pool",
-    stack: ["TypeScript", "React", "Vite", "Supabase"],
-    blurb: "A roommate matching app with ML-based compatibility score.",
-    links: { repo: "https://github.com/your-username/toletu", demo: "#" }
-  },
-  {
-    name: "PhotonSketch",
-    stack: ["Rust", "WASM", "WebGPU"],
-    blurb: "A GPU-accelerated sketch engine for the browser.",
-    links: { repo: "https://github.com/your-username/photonsketch", demo: "#" }
-  }
+  {
+    name: "Toletu — Roommate Pool",
+    stack: ["TypeScript", "React", "Vite", "Supabase"],
+    blurb: "A roommate matching app with ML-based compatibility score.",
+    links: { repo: "https://github.com/your-username/toletu", demo: "#" }
+  },
+  {
+    name: "PhotonSketch",
+    stack: ["Rust", "WASM", "WebGPU"],
+    blurb: "A GPU-accelerated sketch engine for the browser.",
+    links: { repo: "https://github.com/your-username/photonsketch", demo: "#" }
+  }
 ];`},
-        { name: "project1.png", type: "file", content: "__IMAGE_project1__" },
-        { name: "project2.png", type: "file", content: "__IMAGE_project2__" }
-      ]
-    },
-    {
-      name: "gallery",
-      type: "folder",
-      children: [
-        { name: "profile.jpg", type: "file", content: "__IMAGE_avatar__" },
-        { name: "team.jpg", type: "file", content: "__IMAGE_team__" }
-      ]
-    },
-    {
-      name: "README.md",
-      type: "file",
-      content:
+        { name: "project1.png", type: "file", content: "__IMAGE_project1__" },
+        { name: "project2.png", type: "file", content: "__IMAGE_project2__" }
+      ]
+    },
+    {
+      name: "gallery",
+      type: "folder",
+      children: [
+        { name: "profile.jpg", type: "file", content: "__IMAGE_avatar__" },
+        { name: "team.jpg", type: "file", content: "__IMAGE_team__" }
+      ]
+    },
+    {
+      name: "README.md",
+      type: "file",
+      content:
 `# VS Code Portfolio
 
 This portfolio is designed to look like the VS Code editor.
@@ -200,37 +276,39 @@ This portfolio is designed to look like the VS Code editor.
 - Click files in the sidebar to open them as tabs.
 - Markdown, JSON/TXT/JS, images, and HTML are supported.
 - Text files are *editable* in the browser (changes are not saved).`
-    }
-  ]
+    }
+  ]
 };
 
 /* Tiny embedded images (SVG → data URL) */
 const IMAGES = {
-  avatar: 'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="100%" height="100%" fill="#0ea5e9"/><circle cx="150" cy="160" r="70" fill="#fff" opacity=".9"/><rect x="80" y="250" width="140" height="140" rx="18" fill="#fff" opacity=".9"/><text x="260" y="190" font-family="monospace" font-size="36" fill="#fff">Your Name</text><text x="260" y="240" font-family="monospace" font-size="18" fill="#e0f2fe">Developer · Tooling · UX</text></svg>`),
-  team: 'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22c55e"/><stop offset="1" stop-color="#16a34a"/></linearGradient></defs><rect width="100%" height="100%" fill="url(#g)"/><g fill="#fff" opacity=".95"><circle cx="130" cy="170" r="40"/><rect x="95" y="220" width="70" height="80" rx="12"/></g><g fill="#fff" opacity=".9"><circle cx="260" cy="170" r="40"/><rect x="225" y="220" width="70" height="80" rx="12"/></g><g fill="#fff" opacity=".85"><circle cx="390" cy="170" r="40"/><rect x="355" y="220" width="70" height="80" rx="12"/></g></svg>`),
-  project1: 'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500"><rect width="100%" height="100%" fill="#1e293b"/><text x="50" y="90" font-family="monospace" font-size="28" fill="#93c5fd">Toletu — Roommate Pool</text><rect x="50" y="120" width="800" height="320" rx="12" fill="#0ea5e9" opacity=".4"/><text x="60" y="160" font-family="monospace" font-size="16" fill="#e2e8f0">React · TypeScript · Supabase</text></svg>`),
-  project2: 'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500"><rect width="100%" height="100%" fill="#111827"/><text x="50" y="90" font-family="monospace" font-size="28" fill="#86efac">PhotonSketch</text><rect x="50" y="120" width="800" height="320" rx="12" fill="#22c55e" opacity=".25"/><text x="60" y="160" font-family="monospace" font-size="16" fill="#d1fae5">Rust · WASM · WebGPU</text></svg>`)
+  avatar: 'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="100%" height="100%" fill="#0ea5e9"/><circle cx="150" cy="160" r="70" fill="#fff" opacity=".9"/><rect x="80" y="250" width="140" height="140" rx="18" fill="#fff" opacity=".9"/><text x="260" y="190" font-family="monospace" font-size="36" fill="#fff">Your Name</text><text x="260" y="240" font-family="monospace" font-size="18" fill="#e0f2fe">Developer · Tooling · UX</text></svg>`),
+  team: 'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22c55e"/><stop offset="1" stop-color="#16a34a"/></linearGradient></defs><rect width="100%" height="100%" fill="url(#g)"/><g fill="#fff" opacity=".95"><circle cx="130" cy="170" r="40"/><rect x="95" y="220" width="70" height="80" rx="12"/></g><g fill="#fff" opacity=".9"><circle cx="260" cy="170" r="40"/><rect x="225" y="220" width="70" height="80" rx="12"/></g><g fill="#fff" opacity=".85"><circle cx="390" cy="170" r="40"/><rect x="355" y="220" width="70" height="80" rx="12"/></g></svg>`),
+  project1: 'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500"><rect width="100%" height="100%" fill="#1e293b"/><text x="50" y="90" font-family="monospace" font-size="28" fill="#93c5fd">Toletu — Roommate Pool</text><rect x="50" y="120" width="800" height="320" rx="12" fill="#0ea5e9" opacity=".4"/><text x="60" y="160" font-family="monospace" font-size="16" fill="#e2e8f0">React · TypeScript · Supabase</text></svg>`),
+  project2: 'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500"><rect width="100%" height="100%" fill="#111827"/><text x="50" y="90" font-family="monospace" font-size="28" fill="#86efac">PhotonSketch</text><rect x="50" y="120" width="800" height="320" rx="12" fill="#22c55e" opacity=".25"/><text x="60" y="160" font-family="monospace" font-size="16" fill="#d1fae5">Rust · WASM · WebGPU</text></svg>`)
 };
 function patchImages(node){
-  if(node.type === "file"){
-    if(node.content === "__IMAGE_avatar__") node.content = IMAGES.avatar;
-    if(node.content === "__IMAGE_team__") node.content = IMAGES.team;
-    if(node.content === "__IMAGE_project1__") node.content = IMAGES.project1;
-    if(node.content === "__IMAGE_project2__") node.content = IMAGES.project2;
-  } else if(node.type === "folder" && node.children){
-    node.children.forEach(patchImages);
-  }
+  if(node.type === "file"){
+    if(node.content === "__IMAGE_avatar__") node.content = IMAGES.avatar;
+    if(node.content === "__IMAGE_team__") node.content = IMAGES.team;
+    if(node.content === "__IMAGE_project1__") node.content = IMAGES.project1;
+    if(node.content === "__IMAGE_project2__") node.content = IMAGES.project2;
+  } else if(node.type === "folder" && node.children){
+    node.children.forEach(patchImages);
+  }
 }
 patchImages(VFS);
 
 /* ==============
-   UI Rendering
-   ============== */
-const $tree   = document.getElementById('tree');
-const $tabs   = document.getElementById('tabs');
+   UI Rendering
+   ============== */
+const $tree   = document.getElementById('tree');
+const $tabs   = document.getElementById('tabs');
 const $editor = document.getElementById('editor');
 const $status = document.getElementById('status');
 const $repoName = document.getElementById('repoName');
+const $sidebar = document.getElementById('sidebar');
+const $overlay = document.getElementById('overlay');
 
 $repoName.textContent = ' / ' + VFS.name;
 
@@ -238,240 +316,256 @@ const openTabs = []; // {path, name, type, content}
 let activePath = null;
 
 function iconFor(node){
-  if(node.type === 'folder'){
-    return '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 4l2 2h8v12H4V4h6z"/></svg>';
-  }
-  const ext = node.name.split('.').pop().toLowerCase();
-  const color = {
-    md:'#43a047', json:'#f59e0b', js:'#f7df1e', txt:'#9aa0a6',
-    html:'#e34f26', png:'#00bcd4', jpg:'#00bcd4', jpeg:'#00bcd4', gif:'#00bcd4', svg:'#00bcd4'
-  }[ext] || '#9aa0a6';
-  return `<svg width="14" height="14" viewBox="0 0 24 24" fill="${color}" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>`;
+  if(node.type === 'folder'){
+    return '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 4l2 2h8v12H4V4h6z"/></svg>';
+  }
+  const ext = node.name.split('.').pop().toLowerCase();
+  const color = {
+    md:'#43a047', json:'#f59e0b', js:'#f7df1e', txt:'#9aa0a6',
+    html:'#e34f26', png:'#00bcd4', jpg:'#00bcd4', jpeg:'#00bcd4', gif:'#00bcd4', svg:'#00bcd4'
+  }[ext] || '#9aa0a6';
+  return `<svg width="14" height="14" viewBox="0 0 24 24" fill="${color}" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>`;
 }
 
 function buildTree(node, basePath=''){
-  const path = basePath ? basePath + '/' + node.name : node.name;
-  if(node.type === 'folder'){
-    const el = document.createElement('div');
-    el.innerHTML = `
-      <div class="node" data-path="${path}" data-type="folder">
-        ${iconFor(node)} <span class="name">${node.name}</span> <span class="badge">${node.children.length}</span>
-      </div>`;
-    const childrenWrap = document.createElement('div');
-    childrenWrap.className = 'indent';
-    node.children.forEach(child => childrenWrap.appendChild(buildTree(child, path)));
-    el.appendChild(childrenWrap);
-    el.querySelector('.node').addEventListener('click', (e)=>{
-      e.stopPropagation();
-      childrenWrap.style.display = (childrenWrap.style.display === 'none') ? '' : 'none';
-      setActiveNode(path);
-    });
-    return el;
-  }else{
-    const el = document.createElement('div');
-    el.innerHTML = `
-      <div class="node" data-path="${path}" data-type="file">
-        ${iconFor(node)} <span class="name">${node.name}</span>
-      </div>`;
-    el.querySelector('.node').addEventListener('click', (e)=>{
-      e.stopPropagation();
-      openFile(path);
-    });
-    return el;
-  }
+  const path = basePath ? basePath + '/' + node.name : node.name;
+  if(node.type === 'folder'){
+    const el = document.createElement('div');
+    el.innerHTML = `
+      <div class="node" data-path="${path}" data-type="folder">
+        ${iconFor(node)} <span class="name">${node.name}</span> <span class="badge">${node.children.length}</span>
+      </div>`;
+    const childrenWrap = document.createElement('div');
+    childrenWrap.className = 'indent';
+    node.children.forEach(child => childrenWrap.appendChild(buildTree(child, path)));
+    el.appendChild(childrenWrap);
+    el.querySelector('.node').addEventListener('click', (e)=>{
+      e.stopPropagation();
+      childrenWrap.style.display = (childrenWrap.style.display === 'none') ? '' : 'none';
+      setActiveNode(path);
+    });
+    return el;
+  }else{
+    const el = document.createElement('div');
+    el.innerHTML = `
+      <div class="node" data-path="${path}" data-type="file">
+        ${iconFor(node)} <span class="name">${node.name}</span>
+      </div>`;
+    el.querySelector('.node').addEventListener('click', (e)=>{
+      e.stopPropagation();
+      openFile(path);
+      closeSidebar(); // Added: Close sidebar after opening a file on mobile
+    });
+    return el;
+  }
 }
 function setActiveNode(path){
-  $tree.querySelectorAll('.node').forEach(n => n.classList.toggle('active', n.dataset.path === path));
+  $tree.querySelectorAll('.node').forEach(n => n.classList.toggle('active', n.dataset.path === path));
 }
 
 $tree.appendChild(buildTree(VFS));
 
 /* ===========
-   Tabs logic
-   =========== */
+   Tabs logic
+   =========== */
 function openFile(path){
-  const node = findNodeByPath(VFS, path);
-  if(!node || node.type !== 'file') return;
-  if(!openTabs.find(t => t.path === path)){
-    openTabs.push({ path, name: node.name, type: 'file', content: node.content });
-    renderTabs();
-  }
-  setActiveTab(path);
-  renderEditor(node);
-  $status.textContent = 'Opened ' + path;
+  const node = findNodeByPath(VFS, path);
+  if(!node || node.type !== 'file') return;
+  if(!openTabs.find(t => t.path === path)){
+    openTabs.push({ path, name: node.name, type: 'file', content: node.content });
+    renderTabs();
+  }
+  setActiveTab(path);
+  renderEditor(node);
+  $status.textContent = 'Opened ' + path;
 }
 function closeTab(path){
-  const idx = openTabs.findIndex(t => t.path === path);
-  if(idx !== -1){
-    openTabs.splice(idx,1);
-    if(activePath === path){
-      activePath = openTabs.length ? openTabs[openTabs.length-1].path : null;
-      if(activePath){
-        const node = findNodeByPath(VFS, activePath);
-        renderEditor(node);
-      }else{
-        $editor.innerHTML = '';
-      }
-    }
-    renderTabs();
-  }
+  const idx = openTabs.findIndex(t => t.path === path);
+  if(idx !== -1){
+    openTabs.splice(idx,1);
+    if(activePath === path){
+      activePath = openTabs.length ? openTabs[openTabs.length-1].path : null;
+      if(activePath){
+        const node = findNodeByPath(VFS, activePath);
+        renderEditor(node);
+      }else{
+        $editor.innerHTML = '';
+      }
+    }
+    renderTabs();
+  }
 }
 function setActiveTab(path){
-  activePath = path;
-  renderTabs();
+  activePath = path;
+  renderTabs();
 }
 function renderTabs(){
-  $tabs.innerHTML = '';
-  openTabs.forEach(tab=>{
-    const el = document.createElement('div');
-    el.className = 'tab' + (tab.path === activePath ? ' active':'');
-    el.innerHTML = `<span class="name">${tab.name}</span><span class="close">×</span>`;
-    el.addEventListener('click', ()=>{ setActiveTab(tab.path); renderEditor(findNodeByPath(VFS, tab.path)); });
-    el.querySelector('.close').addEventListener('click', (e)=>{ e.stopPropagation(); closeTab(tab.path); });
-    $tabs.appendChild(el);
-  });
+  $tabs.innerHTML = '';
+  openTabs.forEach(tab=>{
+    const el = document.createElement('div');
+    el.className = 'tab' + (tab.path === activePath ? ' active':'');
+    el.innerHTML = `<span class="name">${tab.name}</span><span class="close">×</span>`;
+    el.addEventListener('click', ()=>{ setActiveTab(tab.path); renderEditor(findNodeByPath(VFS, tab.path)); });
+    el.querySelector('.close').addEventListener('click', (e)=>{ e.stopPropagation(); closeTab(tab.path); });
+    $tabs.appendChild(el);
+  });
 }
 
 /* ==============
-   Editor render
-   ============== */
+   Editor render
+   ============== */
 function renderEditor(node){
-  const ext = node.name.split('.').pop().toLowerCase();
-  $editor.innerHTML = '';
-  if(['png','jpg','jpeg','gif','svg'].includes(ext)){
-    const img = document.createElement('img');
-    img.src = node.content;
-    const wrap = document.createElement('div');
-    wrap.className = 'img-wrap';
-    wrap.appendChild(img);
-    $editor.appendChild(wrap);
-    return;
-  }
-  if(ext === 'md'){
-    const html = renderMarkdown(node.content);
-    const div = document.createElement('div');
-    div.className = 'md';
-    div.innerHTML = html;
-    $editor.appendChild(div);
-    return;
-  }
-  if(ext === 'html'){
-    // sandboxed preview
-    const iframe = document.createElement('iframe');
-    iframe.setAttribute('sandbox','allow-forms allow-scripts allow-same-origin');
-    iframe.style.width = '100%';
-    iframe.style.height = '60vh';
-    iframe.srcdoc = node.content;
-    $editor.appendChild(iframe);
+  const ext = node.name.split('.').pop().toLowerCase();
+  $editor.innerHTML = '';
+  if(['png','jpg','jpeg','gif','svg'].includes(ext)){
+    const img = document.createElement('img');
+    img.src = node.content;
+    const wrap = document.createElement('div');
+    wrap.className = 'img-wrap';
+    wrap.appendChild(img);
+    $editor.appendChild(wrap);
+    return;
+  }
+  if(ext === 'md'){
+    const html = renderMarkdown(node.content);
+    const div = document.createElement('div');
+    div.className = 'md';
+    div.innerHTML = html;
+    $editor.appendChild(div);
+    return;
+  }
+  if(ext === 'html'){
+    // sandboxed preview
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('sandbox','allow-forms allow-scripts allow-same-origin');
+    iframe.style.width = '100%';
+    iframe.style.height = '60vh';
+    iframe.srcdoc = node.content;
+    $editor.appendChild(iframe);
 
-    const pre = document.createElement('pre');
-    pre.textContent = node.content;
-    pre.setAttribute('contenteditable','true');
-    $editor.appendChild(document.createElement('hr'));
-    $editor.appendChild(pre);
-    return;
-  }
-  // json/txt/js → editable
-  const pre = document.createElement('pre');
-  pre.setAttribute('contenteditable','true');
-  pre.textContent = node.content;
-  $editor.appendChild(pre);
+    const pre = document.createElement('pre');
+    pre.textContent = node.content;
+    pre.setAttribute('contenteditable','true');
+    $editor.appendChild(document.createElement('hr'));
+    $editor.appendChild(pre);
+    return;
+  }
+  // json/txt/js → editable
+  const pre = document.createElement('pre');
+  pre.setAttribute('contenteditable','true');
+  pre.textContent = node.content;
+  $editor.appendChild(pre);
 }
 
 /* =========
-   Helpers
-   ========= */
+   Helpers
+   ========= */
 function findNodeByPath(node, path, base=''){
-  const here = base ? base + '/' + node.name : node.name;
-  if(here === path) return node;
-  if(node.type === 'folder' && node.children){
-    for(const ch of node.children){
-      const found = findNodeByPath(ch, path, here);
-      if(found) return found;
-    }
-  }
-  return null;
+  const here = base ? base + '/' + node.name : node.name;
+  if(here === path) return node;
+  if(node.type === 'folder' && node.children){
+    for(const ch of node.children){
+      const found = findNodeByPath(ch, path, here);
+      if(found) return found;
+    }
+  }
+  return null;
 }
 
 // Simple markdown renderer (headings, bold/italic, lists, links, images, code ticks)
 function renderMarkdown(md){
-  let html = md
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');  // escape
-  // images ![alt](url)
-  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_,alt,src)=>{
-    if(src.startsWith('__IMAGE')){ return `<img alt="${alt}" src="${IMAGES[src.replace('__IMAGE_','').toLowerCase()]||''}">`; }
-    return `<img alt="${alt}" src="${src}">`;
-  });
-  // links [text](url)
-  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, `<a href="$2" target="_blank" rel="noopener">$1</a>`);
-  // bold **text**
-  html = html.replace(/\*\*([^*]+)\*\*/g, `<strong>$1</strong>`);
-  // italics *text*
-  html = html.replace(/\*([^*\n]+)\*/g, `<em>$1</em>`);
-  // headings
-  html = html.replace(/^### (.*)$/gm, `<h3>$1</h3>`);
-  html = html.replace(/^## (.*)$/gm, `<h2>$1</h2>`);
-  html = html.replace(/^# (.*)$/gm, `<h1>$1</h1>`);
-  // lists
-  html = html.replace(/^\s*-\s+(.*)$/gm, `<li>$1</li>`);
-  html = html.replace(/(<li>.*<\/li>)(?!\s*<li>)/gs, `<ul>$1</ul>`);
-  // paragraphs
-  html = html.replace(/(^|\n)([^<\n][^\n]*)/g, (m,p1,p2)=>{
-    if(/^<\/?(h1|h2|h3|ul|li)/.test(p2.trim())) return m;
-    if(!p2.trim()) return m;
-    return `${p1}<p>${p2}</p>`;
-  });
-  return html;
+  let html = md
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');  // escape
+  // images ![alt](url)
+  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_,alt,src)=>{
+    if(src.startsWith('__IMAGE')){ return `<img alt="${alt}" src="${IMAGES[src.replace('__IMAGE_','').toLowerCase()]||''}">`; }
+    return `<img alt="${alt}" src="${src}">`;
+  });
+  // links [text](url)
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, `<a href="$2" target="_blank" rel="noopener">$1</a>`);
+  // bold **text**
+  html = html.replace(/\*\*([^*]+)\*\*/g, `<strong>$1</strong>`);
+  // italics *text*
+  html = html.replace(/\*([^*\n]+)\*/g, `<em>$1</em>`);
+  // headings
+  html = html.replace(/^### (.*)$/gm, `<h3>$1</h3>`);
+  html = html.replace(/^## (.*)$/gm, `<h2>$1</h2>`);
+  html = html.replace(/^# (.*)$/gm, `<h1>$1</h1>`);
+  // lists
+  html = html.replace(/^\s*-\s+(.*)$/gm, `<li>$1</li>`);
+  html = html.replace(/(<li>.*<\/li>)(?!\s*<li>)/gs, `<ul>$1</ul>`);
+  // paragraphs
+  html = html.replace(/(^|\n)([^<\n][^\n]*)/g, (m,p1,p2)=>{
+    if(/^<\/?(h1|h2|h3|ul|li)/.test(p2.trim())) return m;
+    if(!p2.trim()) return m;
+    return `${p1}<p>${p2}</p>`;
+  });
+  return html;
 }
 
 /* =========
-   Commands
-   ========= */
+   Commands
+   ========= */
 document.getElementById('openAll').addEventListener('click', ()=>{
-  // open common portfolio files
-  const paths = [
-    `${VFS.name}/profile/about_me.md`,
-    `${VFS.name}/profile/education.json`,
-    `${VFS.name}/profile/experience.txt`,
-    `${VFS.name}/projects/projects.js`,
-    `${VFS.name}/profile/contact.html`,
-    `${VFS.name}/projects/project1.png`,
-    `${VFS.name}/gallery/profile.jpg`
-  ];
-  paths.forEach(p => openFile(p));
+  // open common portfolio files
+  const paths = [
+    `${VFS.name}/profile/about_me.md`,
+    `${VFS.name}/profile/education.json`,
+    `${VFS.name}/profile/experience.txt`,
+    `${VFS.name}/projects/projects.js`,
+    `${VFS.name}/profile/contact.html`,
+    `${VFS.name}/projects/project1.png`,
+    `${VFS.name}/gallery/profile.jpg`
+  ];
+  paths.forEach(p => openFile(p));
 });
 document.getElementById('themeToggle').addEventListener('click', ()=>{
-  const cur = document.body.getAttribute('data-theme');
-  document.body.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+  const cur = document.body.getAttribute('data-theme');
+  document.body.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
 });
+
+/* Sidebar toggle for mobile */
+const $menuToggle = document.getElementById('menuToggle');
+const $sidebarEl = document.getElementById('sidebar');
+const $overlayEl = document.getElementById('overlay');
+function closeSidebar(){
+  $sidebarEl.classList.remove('open');
+  $overlayEl.classList.remove('active');
+}
+$menuToggle.addEventListener('click', ()=>{
+  $sidebarEl.classList.toggle('open');
+  $overlayEl.classList.toggle('active');
+});
+$overlayEl.addEventListener('click', closeSidebar);
+
 
 /* Keyboard shortcuts */
 document.addEventListener('keydown', (e)=>{
-  const mod = e.ctrlKey || e.metaKey;
-  if(mod && e.key.toLowerCase()==='p'){ // quick open
-    e.preventDefault();
-    $status.textContent = 'Quick Open: type a filename…';
-    const name = prompt('Open file (type part of name):','about');
-    if(!name) return;
-    const matches = [];
-    walk(VFS, (node, path)=>{
-      if(node.type==='file' && node.name.toLowerCase().includes(name.toLowerCase())){
-        matches.push(path);
-      }
-    });
-    if(matches[0]) openFile(matches[0]);
-    else alert('No match.');
-  }
-  if(mod && e.key.toLowerCase()==='w'){ // close tab
-    e.preventDefault();
-    if(activePath) closeTab(activePath);
-  }
+  const mod = e.ctrlKey || e.metaKey;
+  if(mod && e.key.toLowerCase()==='p'){ // quick open
+    e.preventDefault();
+    $status.textContent = 'Quick Open: type a filename…';
+    const name = prompt('Open file (type part of name):','about');
+    if(!name) return;
+    const matches = [];
+    walk(VFS, (node, path)=>{
+      if(node.type==='file' && node.name.toLowerCase().includes(name.toLowerCase())){
+        matches.push(path);
+      }
+    });
+    if(matches[0]) openFile(matches[0]);
+    else alert('No match.');
+  }
+  if(mod && e.key.toLowerCase()==='w'){ // close tab
+    e.preventDefault();
+    if(activePath) closeTab(activePath);
+  }
 });
 
 function walk(node, fn, base=''){
-  const path = base ? base + '/' + node.name : node.name;
-  fn(node, path);
-  if(node.type==='folder' && node.children) node.children.forEach(ch => walk(ch, fn, path));
+  const path = base ? base + '/' + node.name : node.name;
+  fn(node, path);
+  if(node.type==='folder' && node.children) node.children.forEach(ch => walk(ch, fn, path));
 }
 
 /* Boot: open README by default */
@@ -479,3 +573,4 @@ openFile(`${VFS.name}/README.md`);
 </script>
 </body>
 </html>
+
