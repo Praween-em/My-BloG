@@ -317,7 +317,7 @@
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M20 3 10 9 6 6 3 8l7 4-7 4 3 2 4-3 10 6V3Z" fill="currentColor" opacity=".8"/>
       </svg>
-      <span>VS Code Portfolio</span>
+      <span>Praveen's Portfolio</span>
     </div>
     <span class="mono" id="repoName"></span>
     <div class="spacer"></div>
@@ -349,7 +349,7 @@
     Virtual File System (VFS)
     =========================== */
 const VFS = {
-  name: "your-username",  // <-- set to your GitHub username to match repo
+  name: "Praveen-kumar",  // <-- set to your GitHub username to match repo
   type: "folder",
   children: [
     {
@@ -382,15 +382,23 @@ I'm a developer focused on **web**, **systems**, and **developer tools**. I love
           type: "file", 
           content: `[
   {
-    "degree": "B.Tech in Computer Science",
-    "institution": "IIIT Hyderabad",
-    "year": "2021–2025",
-    "highlights": ["GPA 9.1/10", "Systems & HCI track"]
+    "degree": "Master of Computer Applications",
+    "institution": "JNTU Anantapur",
+    "year": "2022–2024",
+    "highlights": ["GPA 8.3/10", "Computer Science"]
   },
+  
   {
-    "degree": "High School",
-    "institution": "Narayana Junior College",
-    "year": "2019–2021",
+    "degree": "BSC in Mathematics",
+    "institution": "SSBN degree college",
+    "year": "2017–2020",
+    "highlights": ["GPA 7.8/10", "Mathematics,Physics,Computer Science"]
+  },
+  
+{
+    "degree": "Intermediate",
+    "institution": "Government Junior College",
+    "year": "2015–2017",
     "highlights": ["State Rank Top 1%", "Physics Olympiad qualifier"]
   }
 ]`
@@ -401,14 +409,14 @@ I'm a developer focused on **web**, **systems**, and **developer tools**. I love
           content: `Experience
 ----------
 
-Software Engineer Intern — Acme Corp (May 2024–Aug 2024)
-• Built internal dashboard (React + Node) used by 120+ engineers.
-• Cut CI times by 32% via caching & pipeline tuning.
-• Drove accessibility audit to WCAG AA.
+Founder — Toletu.com (May 2025–)
+• Founder for the free rental listing platform Toletu.com.
+• www.toletu.com/in.
 
-Freelance — Frontend / Tooling (2022–present)
-• Shipped 15+ sites and 3 internal tools.
-• Created a form engine used by 3 startups.`
+Assocaite Director — N Square Films / Associate(2025–present)
+• Worked in script tying, Image editing, Still Photography, Team management and multiple tasks .
+• Created a website for the production house`
+• WWW>Nsqaurefilms.com`
         },
         { 
           name: "contact.html", 
@@ -430,7 +438,7 @@ Freelance — Frontend / Tooling (2022–present)
 </head>
 <body>
   <h2>Contact</h2>
-  <p>Say hi at <a href="mailto:you@example.com">you@example.com</a> or DM on <a href="https://linkedin.com/in/your-username" target="_blank" rel="noopener">LinkedIn</a>.</p>
+  <p>Say hi at <a href="mailto:praveen1345221@gmail.com">praveen1345221@gmail.com</a> or DM on <a href="https://www.linkedin.com/in/praveen-kumar-a00420280/" target="_blank" rel="noopener">LinkedIn</a>.</p>
   <form onsubmit="alert('Pretend sent!'); return false;">
     <label>Name<br><input required></label><br><br>
     <label>Email<br><input type="email" required></label><br><br>
@@ -453,15 +461,15 @@ Freelance — Frontend / Tooling (2022–present)
 export const projects = [
   {
     name: "Toletu — Roommate Pool",
-    stack: ["TypeScript", "React", "Vite", "Supabase"],
-    blurb: "A roommate matching app with ML-based compatibility score.",
+    stack: ["TypeScript", "React", "Vite", "Postgres"],
+    blurb: "A renatl searching and roommate matching app with ML-based compatibility score.",
     links: { 
-      repo: "https://github.com/your-username/toletu", 
-      demo: "#" 
+      repo: "https://github.com/praween-em/toletu", 
+      demo: "www.toletu.com" 
     }
   },
   {
-    name: "PhotonSketch",
+    name: "",
     stack: ["Rust", "WASM", "WebGPU"],
     blurb: "A GPU-accelerated sketch engine for the browser.",
     links: { 
@@ -693,6 +701,8 @@ function renderEditor(node){
     const img = document.createElement('img');
     img.src = node.content;
     img.alt = node.name;
+    img.style.maxWidth = '100%';
+    img.style.height = 'auto';
     const wrap = document.createElement('div');
     wrap.className = 'img-wrap';
     wrap.appendChild(img);
