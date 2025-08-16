@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>VS Code Portfolio</title>
+<title>Praveen's Portfolio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   :root{
@@ -18,7 +18,7 @@
     --tab:#e7eaf3; --tab-active:#ffffff; --badge:#2563eb;
   }
   *{box-sizing:border-box; margin:0; padding:0}
-  html,body{height:100%; overflow:hidden}
+  html,body{height:100%; overflow:scroll;}
   body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 var(--font)}
   
   /* Responsive layout */
@@ -51,6 +51,7 @@
     min-width:0;
     grid-row: 2;
     width:100%;
+
   }
   .topbar{
     grid-row:1;
@@ -121,11 +122,13 @@
 
   /* Responsive adjustments */
   .editor-inner{
-    padding: 16px 20px;
+    padding: 10px;
     max-width: 980px;
     margin: 0 auto;
     width: 100%;
     box-sizing: border-box;
+    overflow-y: auto;
+    height: 100%;
   }
   .tabs{
     display: flex;
@@ -135,17 +138,26 @@
     overflow-x: auto;
     white-space: nowrap;
   }
+  /* Custom scrollbar for tabs */
+  .tabs::-webkit-scrollbar {
+    height: 3px;
+  }
+  .tabs::-webkit-scrollbar-thumb {
+    background-color: var(--accent);
+    border-radius: 3px;
+  }
   .tab{
     display: flex;
     align-items: center;
     gap: 8px;
     max-width: 280px;
-    min-width: 120px;
+    min-width: 100px; /* Adjusted for smaller screens */
     padding: 6px 10px;
     background: var(--tab);
     border-right: 1px solid var(--border);
     cursor: pointer;
     color: var(--text);
+    flex-shrink: 0; /* Prevent tabs from shrinking below min-width */
   }
   .tab.active{
     background: var(--tab-active);
@@ -159,10 +171,12 @@
   }
   .img-wrap img{
     max-width: 100%;
+    height: auto;
     border: 1px solid var(--border);
     border-radius: 8px;
-    max-height: 400px;
+    max-height: 800px;
     object-fit: contain;
+    display: block;
   }
 
   /* Original styles */
@@ -191,6 +205,36 @@
   .btn:hover{
     background: var(--active);
   }
+
+  /* Theme Toggle Button Styles */
+  #themeToggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .theme-icon-wrapper {
+    display: flex;
+    align-items: center;
+  }
+  /* Show sun icon to switch to light, moon to switch to dark */
+  [data-theme="dark"] .sun-icon { display: block; }
+  [data-theme="dark"] .moon-icon { display: none; }
+  [data-theme="light"] .sun-icon { display: none; }
+  [data-theme="light"] .moon-icon { display: block; }
+  
+  /* Responsive styles for the theme toggle button */
+  @media (max-width: 767px) {
+    .theme-text {
+      display: none; /* Hide text on mobile */
+    }
+    #themeToggle {
+      justify-content: center;
+      width: 28px; /* Match sidebar toggle button size */
+      height: 28px;
+      padding: 4px;
+    }
+  }
+
   .section-title{
     font-size: 12px;
     color: var(--muted);
@@ -234,7 +278,7 @@
   .editor{
     position: relative;
     flex: 1;
-    overflow: auto;
+    overflow: hidden;
     background: var(--bg);
   }
   pre, code{
@@ -247,10 +291,13 @@
     padding: 12px;
     overflow: auto;
     white-space: pre-wrap;
-    word-break: break-word;
+    word-break: break-all;
   }
   pre[contenteditable="true"]{
     outline: none;
+  }
+  .md {
+    word-wrap: break-word;
   }
   .md h1, .md h2, .md h3{
     margin: 0.6em 0 0.2em;
@@ -307,12 +354,20 @@
       <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M20 3 10 9 6 6 3 8l7 4-7 4 3 2 4-3 10 6V3Z" fill="currentColor" opacity=".8"/>
       </svg>
-      <span>VS Code Portfolio</span>
+      <span>Portfolio</span>
     </div>
     <span class="mono" id="repoName"></span>
     <div class="spacer"></div>
-    <button class="btn" id="themeToggle" title="Toggle theme">Toggle Theme</button>
-    <button class="btn" id="openAll" title="Open all files">Open All</button>
+    <button class="btn" id="themeToggle" title="Toggle theme">
+      <span class="theme-icon-wrapper">
+        <!-- Sun icon, visible in dark mode -->
+        <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+        <!-- Moon icon, visible in light mode -->
+        <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.31 0-6-2.69-6-6 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
+      </span>
+      <span class="theme-text">Toggle Theme</span>
+    </button>
+ 
   </div>
 
   <aside class="sidebar visible" id="sidebar">
@@ -339,7 +394,7 @@
    Virtual File System (VFS)
    =========================== */
 const VFS = {
-  name: "your-username",   // <-- set to your GitHub username to match repo
+  name: "praween-em",   // <-- set to your GitHub username to match repo
   type: "folder",
   children: [
     {
@@ -349,18 +404,29 @@ const VFS = {
         { 
           name: "about_me.md", 
           type: "file", 
-          content: `# Hi, I'm Your Name
+          content: `# Hi, I'm Praveen kumar
 
-I'm a developer focused on **web**, **systems**, and **developer tools**. I love building delightful UX with strong engineering under the hood.
+I'm a developer focused on 
+**Web Applications**, **Frontend designs**, and **Mobile AI**. 
+I love building delightful UX with strong engineering under the hood.
 
-- 🌍 Based in: Hyderabad, IN
-- 🧠 Interests: compilers, physics, ML tooling
-- ✉️ Email: [you@example.com](mailto:you@example.com)
-- 🔗 Links: [GitHub](https://github.com/your-username) · [LinkedIn](https://www.linkedin.com/in/your-username) · [Website](https://your-username.github.io)
+- 🌍 Based in: Anantapur, Andhra Pradesh, IN
+- 🧠 Interests: coding, physics, math, music, photography, AI , and more
+- ✉️ Email: [praveen1345221@gmail.com](mailto:praveen1345221@gmail.com)
+- 🔗 Links: [GitHub](https://github.com/praween-em) · [LinkedIn](https://www.linkedin.com/in/praveen-kumar-a00420280/) · [Website](https://praveenkumar.blog)
 
 ## What I do
 - Design accessible, scalable frontends
+- Build performant, user-friendly UIs
+- Create tools that improve developer workflows
+- Develop mobile apps with AI features
+- Optimize performance and reliability
+- Collaborate with cross-functional teams
+- Stay up-to-date with industry trends and best practices
+- Advocate for clean, maintainable code
+- Mentor junior developers and contribute to open source
 - Build high-signal backends with clean APIs
+- Advocate for AI regulation and ethics
 - Ship fast, instrumented, maintainable code
 
 ## Currently
@@ -372,16 +438,22 @@ I'm a developer focused on **web**, **systems**, and **developer tools**. I love
           type: "file", 
           content: `[
   {
-    "degree": "B.Tech in Computer Science",
-    "institution": "IIIT Hyderabad",
-    "year": "2021–2025",
-    "highlights": ["GPA 9.1/10", "Systems & HCI track"]
+    "PG degree": "Master of Computer Applications",
+    "institution": "JNTU Anantapur",
+    "year": "2022–2024",
+    "highlights": ["GPA 8.1/10", "Computer Science Engineering specialization"],
   },
   {
-    "degree": "High School",
-    "institution": "Narayana Junior College",
-    "year": "2019–2021",
-    "highlights": ["State Rank Top 1%", "Physics Olympiad qualifier"]
+    "UG degree": "Bsc in Mathematics, Physics, and Chemistry",
+    "institution": "SSBN Degree College",
+    "year": "2017–2020",
+    "highlights": ["GPA 7.8/10.0 ", "Specialized in Mathematics and Physics (Instrumentation)"],
+  }
+    {
+  "Class": "Intermediate Education",
+    "institution": "Govt Juniour College",
+    "year": "2015–2017",
+    "highlights": ["GPA 883/1000 ", "Mathematics, Physics, and Chemistry (MPC) stream"],
   }
 ]`
         },
@@ -391,14 +463,39 @@ I'm a developer focused on **web**, **systems**, and **developer tools**. I love
           content: `Experience
 ----------
 
-Software Engineer Intern — Acme Corp (May 2024–Aug 2024)
-• Built internal dashboard (React + Node) used by 120+ engineers.
-• Cut CI times by 32% via caching & pipeline tuning.
-• Drove accessibility audit to WCAG AA.
+Founder & CEO, [Toletu](https://toletu.com)
+• Built an AI roommate matching app with 1000+ users.
+• Developed a web scraper for real-time data collection.
+• Built an interface for users to post and browse listings.
+• Implemented a recommendation engine using ML.
+• Designed a user-friendly UI with React and Tailwind CSS.
+• Deployed on Vercel with Postgres backend.
+• Integrated Stripe for payments and subscriptions.
+• Optimized performance with caching and lazy loading.
+• Managed a small team of 3 developers.
 
-Freelance — Frontend / Tooling (2022–present)
-• Shipped 15+ sites and 3 internal tools.
-• Created a form engine used by 3 startups.`
+Founder Praisol Web Solutions
+• Developed  websites and web apps for local businesses.
+• Built a portfolio website for a local Production Company (N Square films).
+• developed educational content for online platforms (Trikona educational services).
+
+Freelance — Full Stack Developer (2020–present)
+• Built 10+ web apps using React, Node.js, and MongoDB.
+• Developed REST APIs and integrated third-party services.
+• Designed responsive UIs with HTML, CSS, and JavaScript.
+• Implemented CI/CD pipelines with GitHub Actions.
+• Deployed apps on AWS, Heroku, and Vercel.
+• Mentored junior developers and conducted code reviews.
+• Contributed to open source projects on GitHub.
+• Participated in hackathons and coding competitions.
+• Published articles on web development and AI on Medium.
+
+•Subject Matter Expert, [MAD EDUCATORS](2020-2022)
+• Developed Math content for BSc students.
+• Created interactive quizzes and exercises.
+• Conducted online classes and doubt-clearing sessions.
+• Collaborated with a team of educators to improve curriculum.
+`
         },
         { 
           name: "contact.html", 
@@ -416,18 +513,35 @@ Freelance — Frontend / Tooling (2022–present)
     a {
       color: #2563eb;
     }
+      button {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
   </style>
 </head>
 <body>
   <h2>Contact</h2>
-  <p>Say hi at <a href="mailto:you@example.com">you@example.com</a> or DM on <a href="https://linkedin.com/in/your-username" target="_blank" rel="noopener">LinkedIn</a>.</p>
+  <p>Say hi at <a href="mailto:praveen1345221@gmail.com">Send a mail </a> or DM on <a href="https://linkedin.com/in/Praween-em" target="" rel="opener">LinkedIn</a>.</p>
   <form onsubmit="alert('Pretend sent!'); return false;">
     <label>Name<br><input required></label><br><br>
     <label>Email<br><input type="email" required></label><br><br>
-    <label>Message<br><textarea rows="4" required></textarea></label><br><br>
+    <label>Message<br><textarea rows="5" required></textarea></label><br><br>
     <button>Send</button>
   </form>
-</body>
+ 
+  <div>
+
+      <li><a href="https://github.com/praween-em" target="_blank" rel="noopener">GitHub</a></li>
+  </div>
+
+  </body>
 </html>`
         }
       ]
@@ -442,20 +556,31 @@ Freelance — Frontend / Tooling (2022–present)
           content: `// Selected projects
 export const projects = [
   {
-    name: "Toletu — Roommate Pool",
+    name: "Toletu — Rental listings & Roommate Pool",
     stack: ["TypeScript", "React", "Vite", "Supabase"],
     blurb: "A roommate matching app with ML-based compatibility score.",
+    link: "https://toletu.com",
     links: { 
-      repo: "https://github.com/your-username/toletu", 
+      repo: "https://github.com/praween-em/toletu", 
       demo: "#" 
     }
-  },
-  {
-    name: "PhotonSketch",
-    stack: ["Rust", "WASM", "WebGPU"],
-    blurb: "A GPU-accelerated sketch engine for the browser.",
+        },
+      {
+    name: "Praisol Web Solutions",
+    stack: ["HTML", "CSS", "JavaScript"],
+    blurb: "A portfolio website for a local production company.",
     links: { 
-      repo: "https://github.com/your-username/photonsketch", 
+      repo: " https://github.com/praween-em/praisol/",
+      demo: "#"
+      }
+        },
+  {
+    name: "Iss Intelligent Surveillance System",
+    stack: ["Python", "OpenCV", "Flask", "TensorFlow"],
+    tech: ["Object Detection", "Face Recognition", "Real-time Monitoring"],
+    blurb: "A smart surveillance system using computer vision.",
+    links: { 
+      repo: "https://github.com/praween-em/Intelligent-Surveillance-System", 
       demo: "#" 
     }
   }
@@ -464,13 +589,19 @@ export const projects = [
         { 
           name: "project1.png", 
           type: "file", 
-          content: "__IMAGE_project1__" 
+          content: "179773cf-518a-4871-9534-c98b7510c37a.png" 
         },
         { 
           name: "project2.png", 
           type: "file", 
-          content: "__IMAGE_project2__" 
+          content: "a3b18e18-80af-407d-bef4-071b09a09704.png" 
+        },
+        { 
+          name: "project3.png", 
+          type: "file", 
+          content: "ChatGPT Image Aug 17, 2025, 01_16_59 AM.png" 
         }
+
       ]
     },
     {
@@ -480,12 +611,12 @@ export const projects = [
         { 
           name: "profile.jpg", 
           type: "file", 
-          content: "__IMAGE_avatar__" 
+          content: "praveen kumar.png" 
         },
         { 
           name: "team.jpg", 
           type: "file", 
-          content: "__IMAGE_team__" 
+          content: "https://via.placeholder.com/800x500.png?text=Team+Image" 
         }
       ]
     },
@@ -510,25 +641,7 @@ This portfolio is designed to look like the VS Code editor.
   ]
 };
 
-/* Tiny embedded images (SVG → data URL) */
-const IMAGES = {
-  avatar: 'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="100%" height="100%" fill="#0ea5e9"/><circle cx="150" cy="160" r="70" fill="#fff" opacity=".9"/><rect x="80" y="250" width="140" height="140" rx="18" fill="#fff" opacity=".9"/><text x="260" y="190" font-family="monospace" font-size="36" fill="#fff">Your Name</text><text x="260" y="240" font-family="monospace" font-size="18" fill="#e0f2fe">Developer · Tooling · UX</text></svg>`),
-  team: 'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22c55e"/><stop offset="1" stop-color="#16a34a"/></linearGradient></defs><rect width="100%" height="100%" fill="url(#g)"/><g fill="#fff" opacity=".95"><circle cx="130" cy="170" r="40"/><rect x="95" y="220" width="70" height="80" rx="12"/></g><g fill="#fff" opacity=".9"><circle cx="260" cy="170" r="40"/><rect x="225" y="220" width="70" height="80" rx="12"/></g><g fill="#fff" opacity=".85"><circle cx="390" cy="170" r="40"/><rect x="355" y="220" width="70" height="80" rx="12"/></g></svg>`),
-  project1: 'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500"><rect width="100%" height="100%" fill="#1e293b"/><text x="50" y="90" font-family="monospace" font-size="28" fill="#93c5fd">Toletu — Roommate Pool</text><rect x="50" y="120" width="800" height="320" rx="12" fill="#0ea5e9" opacity=".4"/><text x="60" y="160" font-family="monospace" font-size="16" fill="#e2e8f0">React · TypeScript · Supabase</text></svg>`),
-  project2: 'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500"><rect width="100%" height="100%" fill="#111827"/><text x="50" y="90" font-family="monospace" font-size="28" fill="#86efac">PhotonSketch</text><rect x="50" y="120" width="800" height="320" rx="12" fill="#22c55e" opacity=".25"/><text x="60" y="160" font-family="monospace" font-size="16" fill="#d1fae5">Rust · WASM · WebGPU</text></svg>`)
-};
 
-function patchImages(node){
-  if(node.type === "file"){
-    if(node.content === "__IMAGE_avatar__") node.content = IMAGES.avatar;
-    if(node.content === "__IMAGE_team__") node.content = IMAGES.team;
-    if(node.content === "__IMAGE_project1__") node.content = IMAGES.project1;
-    if(node.content === "__IMAGE_project2__") node.content = IMAGES.project2;
-  } else if(node.type === "folder" && node.children){
-    node.children.forEach(patchImages);
-  }
-}
-patchImages(VFS);
 
 /* ==============
    UI Rendering
@@ -704,15 +817,10 @@ function renderEditor(node){
     const iframe = document.createElement('iframe');
     iframe.setAttribute('sandbox','allow-forms allow-scripts allow-same-origin');
     iframe.style.width = '100%';
-    iframe.style.height = '60vh';
+    iframe.style.height = '100%';
+    iframe.style.border = 'none';
     iframe.srcdoc = node.content;
     $editor.appendChild(iframe);
-
-    const pre = document.createElement('pre');
-    pre.textContent = node.content;
-    pre.setAttribute('contenteditable','true');
-    $editor.appendChild(document.createElement('hr'));
-    $editor.appendChild(pre);
     return;
   }
   
@@ -781,19 +889,6 @@ function renderMarkdown(md){
 /* =========
    Commands
    ========= */
-document.getElementById('openAll').addEventListener('click', ()=>{
-  const paths = [
-    `${VFS.name}/profile/about_me.md`,
-    `${VFS.name}/profile/education.json`,
-    `${VFS.name}/profile/experience.txt`,
-    `${VFS.name}/projects/projects.js`,
-    `${VFS.name}/profile/contact.html`,
-    `${VFS.name}/projects/project1.png`,
-    `${VFS.name}/gallery/profile.jpg`
-  ];
-  paths.forEach(p => openFile(p));
-});
-
 document.getElementById('themeToggle').addEventListener('click', ()=>{
   const cur = document.body.getAttribute('data-theme');
   const newTheme = cur === 'dark' ? 'light' : 'dark';
