@@ -18,7 +18,7 @@
     --tab:#e7eaf3; --tab-active:#ffffff; --badge:#2563eb;
   }
   *{box-sizing:border-box; margin:0; padding:0}
-  html,body{height:100%; overflow:scroll;}
+  html,body{height:100%; overflow-y:scroll;}
   body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 var(--font)}
   
   /* Responsive layout */
@@ -50,7 +50,7 @@
     flex-direction:column;
     min-width:0;
     grid-row: 2;
-    width:100%;
+    width:80%;
 
   }
   .topbar{
@@ -226,6 +226,13 @@
   @media (max-width: 767px) {
     .theme-text {
       display: none; /* Hide text on mobile */
+    }
+  .img{
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      max-height: 400px; /* Smaller max-height for mobile */
     }
     #themeToggle {
       justify-content: center;
@@ -504,44 +511,87 @@ Freelance — Full Stack Developer (2020–present)
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    :root {
+      --bg: #ffffff; --text: #1f2328; --muted: #6b7280; --accent: #2563eb;
+      --border: #dfe3ea; --panel-bg: #f5f7fb;
+      --font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    body[data-theme="dark"] {
+      --bg: #1e1e1e; --text: #d4d4d4; --muted: #9aa0a6; --accent: #2b88d8;
+      --border: #2d2d2d; --panel-bg: #252526;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font: 14px system-ui;
-      margin: 20px;
-      color: #111;
+      font-family: var(--font);
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 24px;
+      transition: background-color 0.2s, color 0.2s;
     }
-    a {
-      color: #2563eb;
+    .container { max-width: 600px; margin: 0 auto; }
+    h2 { font-size: 24px; margin-bottom: 8px; font-weight: 600; }
+    p { margin-bottom: 24px; color: var(--muted); }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 500; }
+    input, textarea {
+      width: 100%; padding: 10px; font-family: var(--font);
+      background-color: var(--panel-bg); color: var(--text);
+      border: 1px solid var(--border); border-radius: 6px; font-size: 14px;
     }
-      button {
-      background: #2563eb;
-      color: #fff;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 4px;
-      cursor: pointer;
+    input:focus, textarea:focus {
+      outline: none; border-color: var(--accent);
+      box-shadow: 0 0 0 2px #2564eb4a;
     }
-    button:hover {
-      background: #1d4ed8;
+    body[data-theme="dark"] input:focus, body[data-theme="dark"] textarea:focus {
+      box-shadow: 0 0 0 2px #2b89d84a;
+    }
+    textarea { resize: vertical; min-height: 100px; }
+    .submit-btn {
+      display: inline-block; width: 100%; background-color: var(--accent);
+      color: #ffffff; border: none; padding: 12px; border-radius: 6px;
+      font-size: 16px; font-weight: 600; cursor: pointer; transition: background-color 0.2s;
+    }
+    .submit-btn:hover { opacity: 0.9; }
+    .social-links {
+      margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);
+      list-style: none; display: flex; gap: 16px;
     }
   </style>
 </head>
-<body>
-  <h2>Contact</h2>
-  <p>Say hi at <a href="mailto:praveen1345221@gmail.com">Send a mail </a> or DM on <a href="https://linkedin.com/in/Praween-em" target="" rel="opener">LinkedIn</a>.</p>
-  <form onsubmit="alert('Pretend sent!'); return false;">
-    <label>Name<br><input required></label><br><br>
-    <label>Email<br><input type="email" required></label><br><br>
-    <label>Message<br><textarea rows="5" required></textarea></label><br><br>
-    <button>Send</button>
-  </form>
- 
-  <div>
-
+<body data-theme="dark">
+  <div class="container">
+    <h2>Get in Touch</h2>
+    <p>
+      Have a question or want to work together? Feel free to reach out via email at
+      <a href="mailto:praveen1345221@gmail.com">praveen1345221@gmail.com</a>
+      or find me on social media.
+    </p>
+    <form>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Send Message</button>
+    </form>
+    <ul class="social-links">
       <li><a href="https://github.com/praween-em" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/praveen-kumar-a00420280/" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
   </div>
-
-  </body>
+  
+</body>
 </html>`
         }
       ]
@@ -820,6 +870,16 @@ function renderEditor(node){
     iframe.style.height = '100%';
     iframe.style.border = 'none';
     iframe.srcdoc = node.content;
+    
+    // Sync theme with iframe
+    iframe.onload = () => {
+      const currentTheme = document.body.getAttribute('data-theme');
+      const iframeDoc = iframe.contentDocument;
+      if (iframeDoc && iframeDoc.body) {
+        iframeDoc.body.setAttribute('data-theme', currentTheme);
+      }
+    };
+    
     $editor.appendChild(iframe);
     return;
   }
@@ -854,12 +914,12 @@ function renderMarkdown(md){
     .replace(/>/g,'&gt;');
   
   // Images
-  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, src) => {
+  html = html.replace(/!\.*\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, src) => {
     return `<img alt="${alt}" src="${src}" style="max-width:100%; border:1px solid var(--border); border-radius:6px; margin:10px 0;">`;
   });
   
   // Links
-  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  html = html.replace(/\.*\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
   
   // Bold
   html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
@@ -894,7 +954,17 @@ document.getElementById('themeToggle').addEventListener('click', ()=>{
   const newTheme = cur === 'dark' ? 'light' : 'dark';
   document.body.setAttribute('data-theme', newTheme);
   $status.textContent = `Switched to ${newTheme} theme`;
+
+  // Find the iframe and update its theme
+  const editorFrame = $editor.querySelector('iframe');
+  if (editorFrame) {
+    const iframeDoc = editorFrame.contentDocument;
+    if (iframeDoc && iframeDoc.body) {
+      iframeDoc.body.setAttribute('data-theme', newTheme);
+    }
+  }
 });
+
 
 /* Keyboard shortcuts */
 document.addEventListener('keydown', (e)=>{
